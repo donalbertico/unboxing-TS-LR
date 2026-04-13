@@ -40,16 +40,28 @@ For top-performing participants (e.g., BCIComp s05 and Nguyen sub_08), we analyz
 - `stat_analysis.py` / `invariance_stat_analysis.py`: Pairwise T-tests and statistical validation of results.
 - `generate_*.py`: Automated plotting scripts for all compound figures.
 
-## 🛰️ Data Sources
+## 🛰️ Data Sources & Formatting
 
+### 1. Obtaining the Data
 This repository **does not contain the raw EEG data**. To replicate the study, please download the datasets from:
 
-1. **BCI Competition Dataset (Track 3)**:
-   - **Task**: Binary classification of "Stop" vs. "Thank You" imagery.
-   - **Source**: [Dropbox Dataset](https://www.dropbox.com/scl/fi/20j120qae7c2rlmr5lfwr/Dataset.zip?rlkey=0xjdairhprrakmw27d2fnesj7&e=1&dl=0)
-2. **Nguyen et al. (2018) Dataset**:
-   - **Task**: Binary classification of "Short" vs. "Long" word imagery.
-   - **Source**: [OSF Repository](https://osf.io/pq7vb/overview)
+- **BCI Competition Dataset (Track 3)**:
+  - **Source**: [Dropbox Dataset](https://www.dropbox.com/scl/fi/20j120qae7c2rlmr5lfwr/Dataset.zip?rlkey=0xjdairhprrakmw27d2fnesj7&e=1&dl=0)
+- **Nguyen et al. (2018) Dataset**:
+  - **Source**: [OSF Repository](https://osf.io/pq7vb/overview)
+
+### 2. Formatting the Data
+To convert the raw `.fif` or `.mat` files into the processed formats used by the analysis scripts, run the provided formatting utility:
+
+```bash
+python format.py
+```
+
+This script performs the following steps as described in the paper:
+- **BCI Competition**: Converts `raw_epo.fif` and `validation_raw_epo.fif` into `gemini_ica_epo.fif` and `gemini_validation_ica.fif`. It applies manual epoch/channel exclusions, fits a **Picard ICA** to identify ocular artifacts (specifically the most frontal component), and applies an average reference.
+- **Nguyen Dataset**: Validates the presence of `ica_epo.fif`, which is the pre-processed format containing bandpass-filtered (4-80Hz) and ICA-cleaned data.
+
+---
 
 ## 🛠️ Installation & Usage
 
